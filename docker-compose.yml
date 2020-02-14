@@ -1,0 +1,13 @@
+version: '3'
+services:
+  nginx:
+    image: "php7-docker"
+    container_name: buuline-backend
+    ports:
+        - "8181:80"
+    networks:
+        - buuline-proxy
+    volumes:
+        - D:\59160383\linebot:/var/www/html
+networks:
+    buuline-proxy:
