@@ -11,12 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('loginUser');
+// });
+
+Route::get('/Login', function () {
+    return view('loginUser');
 });
 
-Route::get('/main', function () {
+Route::get('/Login/main', function () {
     return view('main');
 });
 
+Route::get('/Login/Userdata', 'UserController@showUser');
 
+Route::post('/Login/user', 'processLogin@checkUser');

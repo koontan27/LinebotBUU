@@ -39,9 +39,8 @@ return [
             'driver' => 'mongodb',
             'host' => '10.80.6.79',
             'port' => '27018',
-            'database' => 'Test'
+            'database' => 'information'
         ]
-    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +52,7 @@ return [
     | the migrations on disk haven't actually been run in the database.
     |
     */
+        ],
 
     'migrations' => 'migrations',
 
