@@ -9,7 +9,7 @@ use \RecursiveArrayIterator;
 use \App\Admin;
 use SebastianBergmann\Environment\Console;
 
-class adminLogin extends Controller
+class processLogin extends Controller
 {
 
     public function checkUser(Request $req)
