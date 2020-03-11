@@ -15,14 +15,29 @@
 //     return view('loginUser');
 // });
 
-Route::get('/Login', function () {
+Route::get('/', function () {
     return view('loginUser');
 });
 
-Route::get('/Login/main', function () {
+Route::get('/main', function () {
     return view('main');
 });
 
-Route::get('/Login/Userdata', 'UserController@showUser');
+Route::get('/main/Userdata', 'UserController@showUser');
 
-Route::post('/Login/user', 'processLogin@checkUser');
+Route::get('/main/Admindata', 'UserController@showAdmin');
+
+Route::post('/login', 'processLogin@checkUser');
+
+Route::get('/checkLogin','processLogin@checkLogin');
+
+Route::get('/main', 'mainController@showUser');
+
+Route::get('/logout', 'mainController@logout');
+
+Route::get('/main/logout', 'mainController@logout');
+
+Route::get('/main/Userdata/message', 'Usercontroller@push');
+
+Route::get('/main/Admindata/change', 'Usercontroller@changeStatus');
+

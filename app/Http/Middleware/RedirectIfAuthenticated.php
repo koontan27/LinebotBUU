@@ -24,4 +24,8 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+    protected function redirectTo()
+    {
+        return '/main';
+    }
 }

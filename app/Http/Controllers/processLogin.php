@@ -6,54 +6,82 @@ use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 use Illuminate\Http\Request;
 use \RecursiveIteratorIterator;
 use \RecursiveArrayIterator;
-use \App\User;
+use \App\Admin;
+use SebastianBergmann\Environment\Console;
 
 class processLogin extends Controller
 {
 
-    public function checkUser(Request $req) {
+    public function checkUser(Request $req)
+    {
+
         $idStu = $req->input('userN');
         $passStu = $req->input('passW');
 
-        // if(is_numeric($idStu)) { echo "Yes";} else {echo "No";}
 
-    $url = 'http://10.80.6.79:27018/';
-    $data_array =  array(
-        'username' => $idStu,
-        'password' => $passStu);
+        $url = 'http://10.80.6.79:27018/';
+        $data_array =  array(
+            'username' => $idStu,
+            'password' => $passStu
+        );
 
         $context = stream_context_create(array(
             'http' => array(
                 'method' => 'POST',
                 'header' => "Content-Type: application/json",
-                'content' => json_encode($data_array))
+                'content' => json_encode($data_array)
+            )
         ));
 
-        $response = file_get_contents('https://buu-api.buu.ac.th/api/version1/authBuu', FALSE, $context);
+        $a2 = Admin::where('username', $idStu)
+            ->where('password', $passStu)
+            ->get();
 
-        if($response === FALSE){
+        if (sizeof($a2)==0) {
             echo "Failed";
             die('Error');
+        }else{
+            session(['username' => $idStu]);
+            return redirect('/main');
         }
 
-         $responseData = new RecursiveIteratorIterator(
-            new RecursiveArrayIterator(json_decode($response, TRUE)),
-            RecursiveIteratorIterator::SELF_FIRST);
+        $responseData = new RecursiveIteratorIterator(
+            new RecursiveArrayIterator(json_decode($a2, TRUE)),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
-            foreach ($responseData as $key => $val) {
-                if(is_array($val)) {
-                }
-                else {
-                    if($key == 'status' ){
-                        if($val == 'fail'){
-                            return redirect('/Login');
-                            break;
-                        } if($val == 'success'){ 
+    //     foreach ($responseData as $key => $val) {
+    //         if (is_array($val)) {
+    //         } else {
+    //             printf($val);
+    //             if ($key == 'status') {
+    //                 if ($val == 'fail') {
+    //                     // return redirect()->back()->with('message', 'กรุณาพิมพ์ไอดีหรือรหัสให้ถูกต้อง');
+    //                     // return redirect('/');
 
-                            return redirect('/Login/Userdata');                         
-                        }
-                    }
-                }
-            }
+    //                 } else {
+    //                     $docs = Admin::where('username', $idStu)
+    //                         ->where('status', 1)
+    //                         ->get();
+    //                     if (count($docs) > 0) {
+    //                         session(['username' => $idStu]);
+    //                         return redirect('/main');
+    //                     } else {
+    //                         // return redirect()->back()->with('message', 'กรุณาพิมพ์ไอดีหรือรหัสให้ถูกต้อง');
+    //                         // return redirect('/');
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    }
+    public function checkLogin()
+    {
+        $usname = session("username");
+        if ($usname) {
+            return  redirect('main');
+        } else {
+            return redirect('/');
+        }
     }
 }
