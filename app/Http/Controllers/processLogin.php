@@ -38,8 +38,7 @@ class processLogin extends Controller
             ->get();
 
         if (sizeof($a2)==0) {
-            echo "Failed";
-            die('Error');
+            return redirect()->back()->with('message', 'กรุณาพิมพ์ชื่อผู้ใช้หรือรหัสให้ถูกต้อง');
         }else{
             session(['username' => $idStu]);
             return redirect('/main');
@@ -49,31 +48,7 @@ class processLogin extends Controller
             new RecursiveArrayIterator(json_decode($a2, TRUE)),
             RecursiveIteratorIterator::SELF_FIRST
         );
-
-    //     foreach ($responseData as $key => $val) {
-    //         if (is_array($val)) {
-    //         } else {
-    //             printf($val);
-    //             if ($key == 'status') {
-    //                 if ($val == 'fail') {
-    //                     // return redirect()->back()->with('message', 'กรุณาพิมพ์ไอดีหรือรหัสให้ถูกต้อง');
-    //                     // return redirect('/');
-
-    //                 } else {
-    //                     $docs = Admin::where('username', $idStu)
-    //                         ->where('status', 1)
-    //                         ->get();
-    //                     if (count($docs) > 0) {
-    //                         session(['username' => $idStu]);
-    //                         return redirect('/main');
-    //                     } else {
-    //                         // return redirect()->back()->with('message', 'กรุณาพิมพ์ไอดีหรือรหัสให้ถูกต้อง');
-    //                         // return redirect('/');
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
+        
     }
     public function checkLogin()
     {

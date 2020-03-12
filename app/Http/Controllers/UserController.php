@@ -13,7 +13,7 @@ class Usercontroller extends Controller
 
     public function showUser(Request $req)
     {
-        $a2 = User::where('status', 1)->get();
+        $a2 = User::where('status', 'ใช้งานอยู่')->get();
         return view('user', compact('a2',));
     }
 

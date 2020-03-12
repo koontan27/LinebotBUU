@@ -21,7 +21,7 @@ require_once '../vendor/autoload.php';
 
 <body>
   <script>
-    function myFunction() {
+    function search() {
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
       filter = input.value.toUpperCase();
@@ -66,7 +66,7 @@ require_once '../vendor/autoload.php';
       });
     }
 
-    function sortTable(n) {
+    function sortTableUname(n) {
       var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
       table = document.getElementById("myTable");
       switching = true;
@@ -81,15 +81,52 @@ require_once '../vendor/autoload.php';
           if (dir == "asc") {
             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
-              $("#sortBtn").attr('class', 'fa fa-sort-up');
-
+              $("#sortBtn1").attr('class', 'fa fa-sort-down');
               break;
             }
           } else if (dir == "desc") {
             if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
               shouldSwitch = true;
-              $("#sortBtn").attr('class', 'fa fa-sort-down');
+              $("#sortBtn1").attr('class', 'fa fa-sort-up');
+              break;
+            }
+          }
+        }
+        if (shouldSwitch) {
+          rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+          switching = true;
+          switchcount++;
+        } else {
+          if (switchcount == 0 && dir == "asc") {
+            dir = "desc";
+            switching = true;
+          }
+        }
+      }
+    }
 
+    function sortTableTime(n) {
+      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      table = document.getElementById("myTable");
+      switching = true;
+      dir = "asc";
+      while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+          shouldSwitch = false;
+          x = rows[i].getElementsByTagName("TD")[n];
+          y = rows[i + 1].getElementsByTagName("TD")[n];
+          if (dir == "asc") {
+            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              $("#sortBtn2").attr('class', 'fa fa-sort-down');
+              break;
+            }
+          } else if (dir == "desc") {
+            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+              shouldSwitch = true;
+              $("#sortBtn2").attr('class', 'fa fa-sort-up');
               break;
             }
           }
@@ -127,7 +164,7 @@ require_once '../vendor/autoload.php';
     <form class="form-inline">
       <div class="form-group mt-2 mb-2 ml-auto p-2" style="margin-right: 7px">
         <input class="form-control mr-sm-1 ml-auto" type="text" placeholder="กรอกชื่อผู้ใช้" id="myInput">
-        <button class="btn btn-dark ml-auto" type="button" onclick="myFunction()">ค้นหา <i class="fa fa-search"></i></button>
+        <button class="btn btn-dark ml-auto" type="button" onclick="search()">ค้นหา <i class="fa fa-search"></i></button>
       </div>
     </form>
 
@@ -135,13 +172,13 @@ require_once '../vendor/autoload.php';
       <table class="table table-bordered" id="myTable">
         <thead>
           <tr>
-            <th onclick="sortTable(0)" scope="col" class="text-center" style="width:100px; cursor:pointer;">ชื่อผู้ใช้ <i id="sortBtn" class="fa fa-sort-down"></i></th>
-            <th scope="col" class="text-center">รูปภาพ</th>
-            <th scope="col" class="text-center">ชื่อ-นามสกุล</th>
-            <th scope="col" class="text-center">ชื่อ line</th>
-            <th scope="col" class="text-center">สถานะ</th>
-            <th scope="col" class="text-center">วันและเวลาที่เข้าสู่ระบบ</th>
-            <th scope="col" class="text-center">เครื่องมือ</th>
+            <th onclick="sortTableUname(0)" scope="col" class="text-center" style="width:100px; cursor:pointer;">ชื่อผู้ใช้ <i id="sortBtn1" class="fa fa-sort-down"></i></th>
+            <th scope="col" class="text-center">รูปภาพไลน์</th>
+            <th scope="col" class="text-center" style="width:200px">ชื่อ - นามสกุล</th>
+            <th scope="col" class="text-center" style="width:120px;">ชื่อไลน์</th>
+            <th scope="col" class="text-center" style="width:100px;">สถานะ</th>
+            <th onclick="sortTableTime(0)" scope="col" class="text-center" style="width:220px; cursor:pointer;">วันและเวลาที่เข้าสู่ระบบ <i id="sortBtn2" class="fa fa-sort-down"></i></th>
+            <th scope="col" class="text-center" style="width:250px;">เครื่องมือ</th>
           </tr>
         </thead>
         <tbody>
@@ -182,7 +219,7 @@ require_once '../vendor/autoload.php';
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                  <button type="button" class="btn btn-primary" onclick="message()">ส่งข้อความ</button>
+                  <button type="button" class="btn btn-success" onclick="message()">ส่งข้อความ</button>
                 </div>
               </div>
             </div>

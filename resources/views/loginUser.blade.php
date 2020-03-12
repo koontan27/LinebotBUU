@@ -40,7 +40,7 @@
 
         <form action="/login" method="post">@csrf
           <div class="wrap-input100 validate-input m-b-16" data-validate="Username is required">
-            <input class="input100" id="uname" type="text" name="userN" placeholder="ชื่อผู้ใช้หรือรหัสประจำตัว">
+            <input class="input100" id="uname" type="text" name="userN" placeholder="ชื่อผู้ใช้">
           </div>
 
           <div class="wrap-input100 validate-input m-b-16" data-validate="Password is required">

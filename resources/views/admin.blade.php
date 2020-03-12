@@ -21,7 +21,7 @@ require_once '../vendor/autoload.php';
 
 <body>
     <script>
-        function myFunction() {
+        function search() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
@@ -149,6 +149,13 @@ require_once '../vendor/autoload.php';
                 }
             }
         }
+
+        function telPhone(event) {
+            if (event.target.value.length === 9 && !event.target.value.includes('-')) {
+                event.target.value = event.target.value.slice(0, 3) + '-' + event.target.value.slice(3);
+            }
+        }
+
     </script>
 
     <nav class="navbar navbar-expand-lg sticky-top navbar-light" style="background-color: rgb(226, 196, 123);">
@@ -170,11 +177,11 @@ require_once '../vendor/autoload.php';
         <form class="form-inline">
             <div class="form-group mt-2 mb-2 ml-auto p-2" style="margin-right: 7px">
                 <input class="form-control mr-sm-1 ml-auto" type="text" placeholder="กรอกชื่อผู้ใช้" id="myInput">
-                <button class="btn btn-dark ml-auto" type="button" onclick="myFunction()" style="margin-right:10px">ค้นหา <i class="fa fa-search"></i></button>
+                <button class="btn btn-dark ml-auto" type="button" onclick="search()" style="margin-right:10px">ค้นหา <i class="fa fa-search"></i></button>
                 <button class="btn btn-success ml-auto" type="button" data-toggle="modal" data-target="#addAdminModel">เพิ่มเจ้าหน้าที่ <i class="fa fa-plus"></i></button>
             </div>
         </form>
-        <div class="modal fade" id="addAdminModel" tabindex="-1" role="dialog" aria-labelledby="addAdminModelLabel" aria-hidden="true" >
+        <div class="modal fade" id="addAdminModel" tabindex="-1" role="dialog" aria-labelledby="addAdminModelLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -183,38 +190,38 @@ require_once '../vendor/autoload.php';
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body" >
+                    <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-2 text-right" style="margin-top:5px">ประเภท</div>
-                                <select class="browser-default custom-select" style="width:100px">
-                                    <option selected>แอดมิน</option>
-                                    <option value="1">เจ้าหน้าที่</option>
+                                <select class="browser-default custom-select" style="width:100px" name="role">
+                                    <option selected value="admin">แอดมิน</option>
+                                    <option value="officer">เจ้าหน้าที่</option>
                                 </select>
                             </div>
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-2 text-right" style="margin-top:5px">ชื่อ</div>
-                                <input class="form-control" style="width:150px"></input>
+                                <input class="form-control" style="width:220px" name="first_name"></input>
                                 <div class="col-md-2 text-right" style="margin-top:5px">นามสกุล</div>
-                                <input class="form-control" style="width:160px"></input>
+                                <input class="form-control" style="width:220px" name="last_name"></input>
                             </div>
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-2 text-right" style="margin-top:5px">เบอร์โทรศัพท์</div>
-                                <input class="form-control" style="width:150px"></input>
+                                <input class="form-control" style="width:220px" name="tel" id="tel" onkeypress="telPhone(event)"  maxlength="11" oninput="this.value = this.value.replace(/[^0-9./-]/g, '').replace(/(\..*)\./g, '$1');"></input>
                                 <div class="col-md-2 text-right" style="margin-top:5px">อีเมล</div>
-                                <input class="form-control" style="width:160px"></input>
+                                <input class="form-control" style="width:220px" name="email"></input>
                             </div>
                             <div class="row" style="margin-top:20px">
                                 <div class="col-md-2 text-right" style="margin-top:5px">ชื่อผู้ใช้</div>
-                                <input class="form-control" style="width:150px"></input>
+                                <input class="form-control" style="width:220px" name="ad_user"></input>
                                 <div class="col-md-2 text-right" style="margin-top:5px">รหัสผ่าน</div>
-                                <input class="form-control" style="width:160px"></input>
+                                <input class="form-control" style="width:220px" name="ad_pass"></input>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ปิด</button>
-                        <button type="button" class="btn btn-primary" onclick="message()">เพิ่ม</button>
+                        <button type="button" class="btn btn-primary" type='submit' value="addAdmin">เพิ่ม</button>
                     </div>
                 </div>
             </div>

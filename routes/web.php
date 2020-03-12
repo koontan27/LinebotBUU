@@ -41,3 +41,7 @@ Route::get('/main/Userdata/message', 'Usercontroller@push');
 
 Route::get('/main/Admindata/change', 'Usercontroller@changeStatus');
 
+Route::get('insert','insertAdmin@insertform');
+
+Route::post('create','insertAdmin@insert');
+
